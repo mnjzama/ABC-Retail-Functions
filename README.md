@@ -237,7 +237,7 @@ appsettings.json
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/ABC-Retail.git
+git clone https://github.com/mnjzama/ABC-Retail.git
 ```
 
 ### Open Solution
@@ -282,8 +282,8 @@ This project was developed as part of a Cloud Development and Azure-focused acad
 
 # 👨‍💻 Author
 
-Name: Mandlenkosi Njabulo Zama
-GitHub: https://github.com/mnjzama
+* Name: Mandlenkosi Njabulo Zama
+* GitHub: https://github.com/mnjzama
 
 ---
 
