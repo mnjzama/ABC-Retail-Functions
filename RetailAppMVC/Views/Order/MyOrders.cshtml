@@ -1,0 +1,58 @@
+﻿@model IEnumerable<RetailAppCore.ViewModels.OrderViewModel>
+
+<h2>My Orders 🛒</h2>
+
+@foreach (var order in Model)
+{
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <span>Order #: @order.OrderNumber</span>
+            <span class="badge @(order.Status switch
+                  {
+                      "Pending" => "bg-warning text-dark",
+                      "Processing" => "bg-info text-white",
+                      "Completed" => "bg-success",
+                      "Cancelled" => "bg-danger",
+                      _ => "bg-secondary"
+                  })">
+            @(order.Status switch
+            {
+                "Pending" => "⏳ Pending",
+                "Processing" => "🔄 Processing",
+                "Completed" => "✅ Completed",
+                "Cancelled" => "❌ Cancelled",
+                _ => "❔ Unknown"
+            })
+        </span>
+    </div>
+    <div class="card-body">
+        <p><strong>Date:</strong> @order.OrderDate.ToLongDateString()</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in order.Products)
+                    {
+                        <tr>
+                            <td>@product.ProductName</td>
+                            <td>@product.Quantity</td>
+                            <td>R @product.Price.ToString("N2")</td>
+                            <td>R @product.LineTotal.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <h5 class="text-end">Total: R @order.TotalPrice.ToString("N2")</h5>
+        </div>
+    </div>
+}
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("Index", "Product")" class="btn btn-primary">🛍️ Continue Shopping</a>
+</div>

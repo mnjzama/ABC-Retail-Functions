@@ -1,0 +1,37 @@
+﻿@model RetailAppCore.Models.Customer
+
+<div class="container my-5">
+    <div class="card shadow-lg border-primary">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>👤 Customer Profile</h3>
+            <p class="mb-0 small opacity-75">View detailed customer information 🌟</p>
+        </div>
+
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">First Name:</dt>
+                <dd class="col-sm-9">@Model.FirstName</dd>
+
+                <dt class="col-sm-3">Last Name:</dt>
+                <dd class="col-sm-9">@Model.LastName</dd>
+
+                <dt class="col-sm-3">Email:</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">Phone Number:</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3">Password:</dt>
+                <dd class="col-sm-9">@Model.Password</dd>
+
+                <dt class="col-sm-3">Confirmed Password:</dt>
+                <dd class="col-sm-9">@Model.ConfirmPassword</dd>
+            </dl>
+        </div>
+
+        <div class="card-footer d-flex justify-content-end gap-2">
+            <a asp-action="Edit" asp-route-rowKey="@Model.RowKey" class="btn btn-warning">✏ Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">⬅ Back to List</a>
+        </div>
+    </div>
+</div>

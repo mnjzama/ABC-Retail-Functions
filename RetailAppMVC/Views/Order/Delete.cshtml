@@ -1,0 +1,26 @@
+﻿@model RetailAppCore.ViewModels.OrderViewModel
+
+<div class="container mt-4">
+    <h2 class="text-danger mb-3">⚠ Delete Order</h2>
+    <div class="alert alert-danger shadow-sm">
+        Are you sure you want to permanently delete this order? This action cannot be undone.
+    </div>
+
+    <div class="card border-danger shadow-sm mb-4">
+
+        <div class="card-body">
+            <p><strong>👤 Customer:</strong> @Model.CustomerName</p>
+            <p><strong>📦 Product:</strong> @Model.ProductName</p>
+            <p><strong>🔢 Quantity:</strong> @Model.Quantity</p>
+            <p><strong>💸 Unit Price:</strong> R @Model.Price.ToString("N2")</p>
+        </div>
+    </div>
+
+    <form asp-action="DeleteConfirmed" asp-route-partitionKey="@Model.PartitionKey" asp-route-rowKey="@Model.RowKey" method="post">
+        <input type="hidden" asp-for="PartitionKey" />
+        <input type="hidden" asp-for="RowKey" />
+
+        <button type="submit" class="btn btn-danger">🗑 Confirm Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">⬅ Cancel</a>
+    </form>
+</div>

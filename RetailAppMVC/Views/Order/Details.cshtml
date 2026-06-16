@@ -1,0 +1,23 @@
+﻿@model RetailAppCore.ViewModels.OrderViewModel
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-info text-white d-flex align-items-center">
+            <i class="bi bi-receipt-cutoff me-2"></i>
+            <h4 class="mb-0">📄 Order Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>👤 Customer:</strong> @Model.CustomerName</p>
+            <p><strong>📦 Product:</strong> @Model.ProductName</p>
+            <p><strong>🔢 Quantity:</strong> @Model.Quantity</p>
+            <p><strong>💸 Unit Price:</strong> R @Model.Price.ToString("N2")</p>
+            <p><strong>🛒 Total Price:</strong> R @Model.OrdersPrice.ToString("N2")</p>
+            <p><strong>📅 Order Date:</strong> @Model.OrderDate.ToLocalTime().ToString("f")</p>
+            <p><strong>📌 Status:</strong> @Model.Status</p>
+        </div>
+        <div class="card-footer d-flex gap-2">
+            <a asp-action="Edit" asp-route-partitionKey="@Model.PartitionKey" asp-route-rowKey="@Model.RowKey" class="btn btn-primary">✏ Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">⬅ Back to Orders</a>
+        </div>
+    </div>
+</div>

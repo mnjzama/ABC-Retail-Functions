@@ -1,0 +1,68 @@
+﻿@model List<RetailAppCore.Models.FileModel>
+
+@{
+    ViewData["Title"] = "File List";
+}
+
+@if (TempData["Message"] != null || TempData["Error"] != null)
+{
+    var isSuccess = TempData["Message"] != null;
+    var alertClass = isSuccess ? "alert-success" : "alert-danger";
+    var message = isSuccess ? TempData["Message"] : TempData["Error"];
+
+    <div class="alert @alertClass alert-dismissible fade show mt-3" role="alert">
+        @message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">🗂 Cloud File Manager</h2>
+    <a class="btn btn-success shadow-sm" asp-action="Upload">
+        ➕ Upload New File
+    </a>
+</div>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info text-center">
+        📁 No files found. Start by uploading a new file!
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>📄 File Name</th>
+                        <th>📏 Size</th>
+                        <th>🕒 Last Modified</th>
+                        <th>⚙️ Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var file in Model)
+                    {
+                        <tr>
+                            <td>@file.FileName</td>
+                            <td>@file.DisplaySize</td>
+                            <td>@file.LastModified?.ToString("f")</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a class="btn btn-sm btn-primary" asp-action="Download" asp-route-fileName="@file.FileName">
+                                        ⬇ Download
+                                    </a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-fileName="@file.FileName">
+                                        🗑 Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

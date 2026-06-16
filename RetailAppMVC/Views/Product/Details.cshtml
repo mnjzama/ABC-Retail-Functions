@@ -1,0 +1,41 @@
+﻿@model RetailAppCore.Models.Product
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="bi bi-bag-check me-2"></i>
+            <h4 class="mb-0">Product Details</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="fw-bold text-dark">@Model.ProductName</h5>
+            <p class="text-muted">@Model.Description</p>
+
+            <table class="table table-borderless mt-3">
+                <tbody>
+                    <tr>
+                        <th scope="row">💰 Price:</th>
+                        <td>R @Model.Price.ToString("N2")</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">🖼 Image:</th>
+                        <td>
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <img src="@Model.ImageUrl" alt="Product Image" class="img-thumbnail shadow-sm" style="max-width:200px;" />
+                            }
+                            else 
+                            {
+                                <span class="text-muted fst-italic">No image available</span>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer d-flex justify-content-start">
+            <a asp-action="Edit" asp-route-partitionKey="@Model.PartitionKey" asp-route-rowKey="@Model.RowKey" class="btn btn-warning me-2">✏ Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">⬅ Back to Products</a>
+        </div>
+    </div>
+</div>

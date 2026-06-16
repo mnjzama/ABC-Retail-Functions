@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">
+            🛍 Welcome to <span class="text-success">ABC Retail</span>
+        </h1>
+        <p class="lead text-muted">
+            Manage your retail operations seamlessly — customers, products, orders, and more!
+        </p>
+        <img src="https://kitchen.spacewood.in/images/kitchen-concept/MANHATTAN-2.jpg"
+             alt="Retail Store" class="img-fluid rounded-4 shadow mt-3" style="max-height: 500px; object-fit: cover;">
+    </div>
+
+    <div class="row text-center g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-primary">🔑 Login</h5>
+                    <p class="card-text text-muted">
+                        Already have an account? Choose whether to log in as a <strong>Customer</strong> or <strong>Admin</strong>.
+                    </p>
+                    <a class="btn btn-outline-primary w-100" asp-controller="Account" asp-action="LoginChoice">
+                        Proceed to Login
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-success">📝 Register</h5>
+                    <p class="card-text text-muted">Don't have an account? Register to get started with ABC Retail.</p>
+                    <a class="btn btn-outline-success w-100" asp-controller="Account" asp-action="Register">
+                        Register
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="text-muted fst-italic">
+            🌟 Simplify your retail workflow — powered by Azure Cloud Technologies.
+        </p>
+    </div>
+</div>

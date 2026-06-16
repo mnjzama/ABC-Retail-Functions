@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Upload File";
+}
+
+<div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">📤 Upload New File</h2>
+    <p class="text-muted">Easily add new files to your cloud storage.</p>
+</div>
+
+<div class="card shadow-sm p-4">
+    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label fw-semibold">Choose a file to upload</label>
+            <input type="file" name="file" class="form-control" required />
+            <small class="text-muted">Supported formats: DOCX, PDF, JPG, PNG, XLSX, etc.</small>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-success">
+                ⬆ Upload File
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                ⬅ Back to Files
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

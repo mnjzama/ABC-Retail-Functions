@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RetailApp</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RetailAppMVC.styles.css" asp-append-version="true" />
+
+    <style>
+        .nav-link:hover {
+            color: #0d6efd !important;
+            transition: 0.3s ease;
+        }
+
+        .page-wrapper {
+            padding-top: 25px;
+            min-height: 70vh;
+        }
+
+        footer {
+            background: #111;
+            color: #ccc;
+        }
+
+            footer a {
+                color: #0d6efd;
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="@Url.Action("Index", "Home")">
+                    🛍️ RetailApp
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">🏠 Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Privacy", "Home")">🔒 Privacy</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container page-wrapper">
+        @RenderBody()
+    </div>
+
+    <footer class="py-4 mt-5">
+        <div class="container text-center">
+
+            <div class="mb-2">
+                © 2025 <strong>RetailApp</strong> — Designed & Developed by <strong>Mandlenkosi Njabulo Zama</strong>
+            </div>
+
+            <div>
+                📧 Email: <a href="mailto:mnj.zama@gmail.com">mnj.zama@gmail.com</a><br />
+                🌐 <a href="@Url.Action("Privacy", "Home")">Privacy Policy</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@model List<RetailAppCore.Models.Customer>
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>👥 Customers</h2>
+        <div class="d-flex gap-2">
+            <a class="btn btn-success shadow-sm" asp-action="Create">➕ Add New Customer</a>
+            <a class="btn btn-info shadow-sm" asp-action="Search">🔍 Search Customers</a>
+
+            @if (User.Identity.IsAuthenticated && User.Identity.Name == "Admin")
+            {
+                <a class="btn btn-outline-success shadow-sm" asp-controller="Product" asp-action="Index">📦 View Products</a>
+                <a class="btn btn-outline-warning shadow-sm" asp-controller="Order" asp-action="Index">🧾 View Orders</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="File" asp-action="Index">📂 View Files</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="Home" asp-action="Privacy">🔒 Privacy</a>
+            }
+
+            <a asp-controller="Account" asp-action="ConfirmLogout" class="btn btn-outline-danger shadow-sm">🚪 Logout</a>
+        </div>
+    </div>
+
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            😕 No customers found. <a asp-action="Create" class="alert-link">Add one now!</a>
+        </div>
+    }
+    else
+    {
+        <!-- Customer Cards -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var customer in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-info shadow-sm">
+                        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>@customer.FirstName @customer.LastName</strong><br />
+                                <small class="opacity-75">@customer.Email</small>
+                            </div>
+                            <span class="badge bg-warning text-dark">✨ VIP</span>
+                        </div>
+
+                        <div class="card-body">
+                            <p><strong>📞 Phone:</strong> @customer.PhoneNumber</p>
+                            <p><strong>💌 Email:</strong> @customer.Email</p>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-between flex-wrap gap-2">
+                            <a class="btn btn-sm btn-primary flex-grow-1" asp-action="Edit" asp-route-partitionKey="@customer.PartitionKey" asp-route-rowKey="@customer.RowKey">✏ Edit</a>
+                            <a class="btn btn-sm btn-secondary flex-grow-1" asp-action="Details" asp-route-partitionKey="@customer.PartitionKey" asp-route-rowKey="@customer.RowKey">ℹ Details</a>
+                            <a class="btn btn-sm btn-danger flex-grow-1" asp-action="Delete" asp-route-partitionKey="@customer.PartitionKey" asp-route-rowKey="@customer.RowKey">🗑 Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

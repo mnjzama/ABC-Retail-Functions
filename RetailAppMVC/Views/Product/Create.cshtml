@@ -1,0 +1,56 @@
+﻿@model RetailAppCore.Models.Product
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-success text-white d-flex align-items-center">
+            <i class="bi bi-box-seam me-2"></i>
+            <h4 class="mb-0">🛒 Add a New Product</h4>
+        </div>
+
+        <div class="card-body">
+            <p class="text-muted">Fill in the details below to introduce a new product to your store catalog.</p>
+
+            <form asp-action="Create" method="post" enctype="multipart/form-data" class="mt-3">
+                <div class="mb-3">
+                    <label asp-for="ProductName" class="form-label fw-bold">Product Name</label>
+                    <input asp-for="ProductName" class="form-control" placeholder="e.g., Wireless Mouse" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Brief product description..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label fw-bold">Price (R)</label>
+                    <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="e.g., 299.99" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ImageFile" class="form-label fw-bold">📸 Product Image</label>
+                    <input type="file" name="imageFile" class="form-control" />
+                    <small class="text-muted">Upload an image to make the product more appealing to customers.</small>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-success">💾 Save Product</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">⬅ Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

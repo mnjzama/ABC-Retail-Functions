@@ -1,0 +1,154 @@
+﻿@model List<RetailAppCore.ViewModels.OrderViewModel>
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📦 Orders</h2>
+        <div class="d-flex gap-2">
+            @if (!User.Identity.IsAuthenticated || User.Identity.Name != "Admin")
+            {
+                <a class="btn btn-success shadow-sm" asp-action="Create">➕ Create New Order</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-info shadow-sm" asp-action="Search">🔍 Search Orders</a>
+            }
+
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a class="btn btn-outline-primary shadow-sm" asp-controller="Customer" asp-action="Index">👥 View Customers</a>
+                <a class="btn btn-outline-success shadow-sm" asp-controller="Product" asp-action="Index">📦 View Products</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="File" asp-action="Index">📂 View Files</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="Home" asp-action="Privacy">🔒 Privacy</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Account" asp-action="ConfirmLogout" method="get" class="m-0">
+                    <button type="submit" class="btn btn-outline-danger shadow-sm">🚪 Logout</button>
+                </form>
+            }
+        </div>
+    </div>
+
+
+    @if (Model != null && Model.Any())
+    {
+        <!-- Large screen: table -->
+        <div class="d-none d-md-block">
+            <table class="table table-hover shadow-sm align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>👤 Customer Name</th>
+                        <th>📦 Product Name</th>
+                        <th>🔢 Quantity</th>
+                        <th>💸 Unit Price (R)</th>
+                        <th>🛒 Total (R)</th>
+                        <th>📅 Order Date</th>
+                        <th>📌 Status</th>
+                        <th>⚙ Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.CustomerName</td>
+                            <td>@order.ProductName</td>
+                            <td>@order.Quantity</td>
+                            <td>@order.Price.ToString("0.00")</td>
+                            <td>@order.OrdersPrice.ToString("0.00")</td>
+                            <td>@order.OrderDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                @switch (order.Status)
+                                {
+                                    case "Pending":
+                                        <span class="badge bg-warning text-dark">⏳ Pending</span>
+                                        break;
+                                    case "Processing":
+                                        <span class="badge bg-info text-white">🔄 Processing</span>
+                                        break;
+                                    case "Completed":
+                                        <span class="badge bg-success">✅ Completed</span>
+                                        break;
+                                    case "Cancelled":
+                                        <span class="badge bg-danger">❌ Cancelled</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">❔ Unknown</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-info text-white" asp-action="Details" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">👁 View</a>
+
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="btn btn-sm btn-warning" asp-action="EditStatus" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">🔄 Update Status</a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">🗑 Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Small screens: card view -->
+        <div class="d-md-none row row-cols-1 g-3">
+            @foreach (var order in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm h-100 border-primary">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <span>👤 @order.CustomerName</span>
+                            <span>📦 @order.ProductName</span>
+                        </div>
+                        <div class="card-body">
+                            <p>🔢 Quantity: <strong>@order.Quantity</strong></p>
+                            <p>💸 Unit Price: <strong>R @order.Price.ToString("N2")</strong></p>
+                            <p>🛒 Total: <strong>R @order.TotalPrice.ToString("N2")</strong></p>
+                            <p>📅 Date: @order.OrderDate.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
+                            <p>
+                                📌 Status:
+                                @switch (order.Status)
+                                {
+                                    case "Pending":
+                                        <span class="badge bg-warning text-dark">⏳ Pending</span>
+                                        break;
+                                    case "Processing":
+                                        <span class="badge bg-info text-white">🔄 Processing</span>
+                                        break;
+                                    case "Completed":
+                                        <span class="badge bg-success">✅ Completed</span>
+                                        break;
+                                    case "Cancelled":
+                                        <span class="badge bg-danger">❌ Cancelled</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">❔ Unknown</span>
+                                        break;
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex gap-1 flex-wrap">
+                            <a class="btn btn-sm btn-info text-white" asp-action="Details" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">👁 View</a>
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-sm btn-warning" asp-action="EditStatus" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">🔄 Update Status</a>
+                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-partitionKey="@order.PartitionKey" asp-route-rowKey="@order.RowKey">🗑 Delete</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center mt-3">
+            🕊 No orders found.
+        </div>
+    }
+</div>

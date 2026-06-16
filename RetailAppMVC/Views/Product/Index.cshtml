@@ -1,0 +1,108 @@
+﻿@model List<RetailAppCore.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h2>Products</h2>
+<p>Welcome to the product page! You can add products to your cart here.</p>
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        @Html.Raw(TempData["Message"])
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-primary">🛍 Product Catalog</h2>
+        <div class="d-flex gap-2">
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success" asp-action="Create"><i class="bi bi-plus-circle"></i> Add Product</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-info shadow-sm" asp-action="Search">🔍 Search Products</a>
+            }
+
+            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                <a class="btn btn-secondary" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> View Cart</a>
+                <a class="btn btn-info shadow-sm" asp-controller="Order" asp-action="MyOrders">My Orders</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="ConfirmLogout" asp-controller="Account" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger">🚪 Logout</button>
+                </form>
+            }
+
+            @if (User.Identity.IsAuthenticated && User.Identity.Name == "Admin")
+            {
+                <a class="btn btn-outline-primary shadow-sm" asp-controller="Customer" asp-action="Index">👥 View Customers</a>
+                <a class="btn btn-outline-warning shadow-sm" asp-controller="Order" asp-action="Index">🧾 View Orders</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="File" asp-action="Index">📂 View Files</a>
+                <a class="btn btn-outline-info shadow-sm" asp-controller="Home" asp-action="Privacy">🔒 Privacy</a>
+            }
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info shadow-sm">
+            No products found. Click <strong>"Add Product"</strong> to create one.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" style="height:200px; object-fit:cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-light text-center py-5 text-muted">No Image</div>
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-dark">@product.ProductName</h5>
+                            <p class="card-text text-muted small">@product.Description</p>
+                            <p class="fw-bold text-success">💰 R @product.Price.ToString("N2")</p>
+                        </div>
+
+                        <div class="card-footer d-flex flex-wrap gap-2 justify-content-between align-items-center">
+                            <div class="btn-group" role="group">
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-partitionKey="@product.PartitionKey" asp-route-rowKey="@product.RowKey">✏ Edit</a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-partitionKey="@product.PartitionKey" asp-route-rowKey="@product.RowKey">🗑 Delete</a>
+                                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-partitionKey="@product.PartitionKey" asp-route-rowKey="@product.RowKey">🔍 View</a>
+                                }
+                            </div>
+
+                            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex gap-1 align-items-center">
+                                    <input type="hidden" name="productId" value="@product.RowKey" />
+                                    <input type="number" name="qty" value="1" min="1" class="form-control form-control-sm" style="width:70px;" />
+                                    <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

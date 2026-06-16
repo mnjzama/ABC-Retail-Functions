@@ -1,0 +1,36 @@
+﻿@model RetailAppCore.ViewModels.OrderViewModel
+@{
+    ViewData["Title"] = "Edit Order Status";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm border-info">
+        <div class="card-header bg-info text-white">
+            <h3>🔄 Update Order Status</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="EditStatus" method="post" class="card p-4 shadow-sm">
+                <input type="hidden" name="partitionKey" value="@ViewBag.PartitionKey" />
+                <input type="hidden" name="rowKey" value="@ViewBag.RowKey" />
+
+                <div class="mb-3">
+                    <h5>📦 Order Details</h5>
+                    <p><strong>Customer:</strong> @Model.CustomerName</p>
+                    <p><strong>Product:</strong> @Model.ProductName</p>
+                    <p><strong>Quantity:</strong> @Model.Quantity</p>
+                    <p><strong>Date:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Status" class="form-label">Order Status</label>
+                    <select asp-for="Status" class="form-select" asp-items="ViewBag.Statuses">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">🔄 Update Status</button>
+                <a asp-action="Index" class="btn btn-secondary">⬅ Back</a>
+            </form>
+        </div>
+    </div>
+</div>
