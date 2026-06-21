@@ -237,7 +237,7 @@ appsettings.json
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/mnjzama/ABC-Retail.git
+git clone [https://github.com/mnjzama/ABC-Retail.git](https://github.com/mnjzama/ABC-Retail-Functions.git)
 ```
 
 ### Open Solution
@@ -278,6 +278,19 @@ This project was developed as part of a Cloud Development and Azure-focused acad
 * Database Integration
 * Scalable Enterprise Solutions
 
+---
+
+# 🎥 Demonstration Videos
+
+## Part 1
+- Video Demonstration: [https://youtu.be/lFvWZEsegkk](https://youtu.be/lFvWZEsegkk)
+
+## Part 2
+- Video Demonstration: [https://youtu.be/brD_XINNDQg](https://youtu.be/brD_XINNDQg)
+
+## Final Demonstration
+- Video Demonstration: [https://youtu.be/yh_YsFUgW7w](https://youtu.be/yh_YsFUgW7w)
+  
 ---
 
 # 👨‍💻 Author
